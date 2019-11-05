@@ -104,3 +104,7 @@ C:\Universidad\Ingenieria de Software\ProyectoEscuela\CapaPresentacion\obj\Debug
 C:\Universidad\Ingenieria de Software\ProyectoEscuela\CapaPresentacion\obj\Debug\CapaPresentacion.xml
 C:\Universidad\Ingenieria de Software\ProyectoEscuela\CapaPresentacion\obj\Debug\CapaPresentacion.pdb
 C:\Users\Frank\Documents\Visual Studio 2013\Projects\ProyectoEscuela\CapaPresentacion\obj\Debug\CapaPresentacion.frmAgregarSeccion.resources
+C:\Users\Marko Alessandro\Documents\Visual Studio 2013\Projects\ProyectoEscuela\CapaPresentacion\bin\Debug\CapaPresentacion.exe.config
+C:\Users\Marko Alessandro\Documents\Visual Studio 2013\Projects\ProyectoEscuela\CapaPresentacion\obj\Debug\CapaPresentacion.exe
+C:\Users\Marko Alessandro\Documents\Visual Studio 2013\Projects\ProyectoEscuela\CapaPresentacion\obj\Debug\CapaPresentacion.xml
+C:\Users\Marko Alessandro\Documents\Visual Studio 2013\Projects\ProyectoEscuela\CapaPresentacion\obj\Debug\CapaPresentacion.pdb

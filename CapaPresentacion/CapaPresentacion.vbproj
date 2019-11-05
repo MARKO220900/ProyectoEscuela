@@ -94,6 +94,12 @@
     <Compile Include="frmAgregarSeccion.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="frmAperturarAnnoEscolar.Designer.vb">
+      <DependentUpon>frmAperturarAnnoEscolar.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmAperturarAnnoEscolar.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="frmListarAlumnos.Designer.vb">
       <DependentUpon>frmListarAlumnos.vb</DependentUpon>
     </Compile>
@@ -105,6 +111,12 @@
     </Compile>
     <Compile Include="frmLogin.Designer.vb">
       <DependentUpon>frmLogin.vb</DependentUpon>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmRegistrarNotas.Designer.vb">
+      <DependentUpon>frmRegistrarNotas.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmRegistrarNotas.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="frmRegistroNotas.Designer.vb">
@@ -148,11 +160,17 @@
     <EmbeddedResource Include="frmAgregarSeccion.resx">
       <DependentUpon>frmAgregarSeccion.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="frmAperturarAnnoEscolar.resx">
+      <DependentUpon>frmAperturarAnnoEscolar.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="frmListarAlumnos.resx">
       <DependentUpon>frmListarAlumnos.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmLogin.resx">
       <DependentUpon>frmLogin.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmRegistrarNotas.resx">
+      <DependentUpon>frmRegistrarNotas.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmRegistroNotas.resx">
       <DependentUpon>frmRegistroNotas.vb</DependentUpon>

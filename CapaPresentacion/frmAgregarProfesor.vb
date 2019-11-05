@@ -3,83 +3,46 @@ Imports CapaEntidad
 Imports CapaNegocio
 Public Class frmAgregarProfesor
 
+    Private Sub frmAgregarProfesor_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        Ver()
+        Dim objnegAula As New negAula
+        cmbcodigoAula.DataSource = objnegAula.listarAula()
+        cmbcodigoAula.DisplayMember = "nombreAula"
+    End Sub
 
+    Private Sub btnAgregarM_Click(sender As Object, e As EventArgs) Handles btnagregarProfesor.Click
 
-    Private Sub btnAgregarM_Click(sender As Object, e As EventArgs) Handles btnAgregarM.Click
-        Dim asigna As String
-        Dim objeP As New entProfesor
-
-        objeP._nombreP = txtNombreProf.Text
-        objeP._apellidoP = txtApellidoProf.Text
-        objeP._correoP = txtCorreoProf.Text
-        objeP._sexoP = cmbSexo.Text
-        objeP._telefonoP = Val(txtTelefonoProf.Text)
-        objeP._direccionP = txtDireccionProf.Text
-        'validacion de checkbox
-
-        If chcCienciasN.Checked = True Then
-            asigna = "Ciencias Naturales"
-            objeP._asignaturasP = asigna
-        ElseIf chcCienciasN.Checked = True Then
-            asigna = chcCienciasN.Text
-        End If
-        If chcCienciasS.Checked = True Then
-            asigna = "Ciencias Sociales"
-            objeP._asignaturasP = asigna
-        ElseIf chcCienciasS.Checked = True Then
-            asigna = chcCienciasS.Text
-        End If
-        If chcEducacionF.Checked = True Then
-            asigna = "Educacion Fisica"
-            objeP._asignaturasP = asigna
-        ElseIf chcEducacionF.Checked = True Then
-            asigna = chcEducacionF.Text
-        End If
-        If chcLengua.Checked = True Then
-            asigna = "Lengua"
-            objeP._asignaturasP = asigna
-        ElseIf chcLengua.Checked = True Then
-            asigna = chcLengua.Text
-        End If
-        If chcMatematicas.Checked = True Then
-            asigna = "Matematica"
-            objeP._asignaturasP = asigna
-        ElseIf chcMatematicas.Checked = True Then
-            asigna = chcMatematicas.Text
-        End If
-        If chcPrimeraLE.Checked = True Then
-            asigna = "Primera lengua"
-            objeP._asignaturasP = asigna
-        ElseIf chcPrimeraLE.Checked = True Then
-            asigna = chcPrimeraLE.Text
-        End If
-        If chcReligion.Checked = True Then
-            asigna = "Religion"
-            objeP._asignaturasP = asigna
-            objeP._asignaturasP = asigna
-        ElseIf chcReligion.Checked = True Then
-            asigna = chcReligion.Text
+        Dim objentProfesor As New entProfesor
+        objentProfesor._dniProfesor = txtdniProfesor.Text
+        objentProfesor._nombreProfesor = txtnombreProfesor.Text
+        objentProfesor._apellidoProfesor = txtapellidoProfesor.Text
+        objentProfesor._edadProfesor = txtedadProfesor.Text
+        objentProfesor._sexoProfesor = cmbsexoProfesor.Text
+        objentProfesor._direccionProfesor = txtdireccionProfesor.Text
+        objentProfesor._correoProfesor = txtcorreoProfesor.Text
+        objentProfesor._telefonoProfesor = txttelefonoProfesor.Text
+        If cmbcodigoAula.Text = "Inicial 3" Then
+            objentProfesor.objentAula._codigoAula = "I3"
+        ElseIf cmbcodigoAula.Text = "Inicial 4" Then
+            objentProfesor.objentAula._codigoAula = "I4"
+        ElseIf cmbcodigoAula.Text = "Inicial 5" Then
+            objentProfesor.objentAula._codigoAula = "I5"
+        ElseIf cmbcodigoAula.Text = "Primaria 1" Then
+            objentProfesor.objentAula._codigoAula = "P1"
+        ElseIf cmbcodigoAula.Text = "Primaria 2" Then
+            objentProfesor.objentAula._codigoAula = "P2"
+        ElseIf cmbcodigoAula.Text = "Primaria 3" Then
+            objentProfesor.objentAula._codigoAula = "P3"
+        ElseIf cmbcodigoAula.Text = "Primaria 4" Then
+            objentProfesor.objentAula._codigoAula = "P4"
+        ElseIf cmbcodigoAula.Text = "Primaria 5" Then
+            objentProfesor.objentAula._codigoAula = "P5"
+        ElseIf cmbcodigoAula.Text = "Primaria 6" Then
+            objentProfesor.objentAula._codigoAula = "P6"
         End If
 
-        If rbInicial.Checked = True Then
-            objeP._nivelP = "Inicial"
-            objeP._gradoYseccionP = cmbInicialGradPorf.Text
-        End If
-        If rbPrimaria.Checked = True Then
-            objeP._nivelP = "Primaria"
-            objeP._gradoYseccionP = cmbGradPorf.Text
-        End If
-
-        If cmbInicialGradPorf.Text <> "" Then
-            objeP._gradoYseccionP = cmbInicialGradPorf.Text
-        ElseIf cmbGradPorf.Text <> "" Then
-            objeP._gradoYseccionP = cmbGradPorf.Text
-        End If
-        objeP._tipoP = cmbTipoProf.Text
-        Dim negPro As New negProfesor
-        Dim negUsu As New negUser
-
-        Dim verificarRP = negPro.Registrar_prof(objeP)
+        Dim objnegProfesor As New negProfesor
+        Dim verificarRP = objnegProfesor.registrarProfesor(objentProfesor)
         If verificarRP = True Then
             MsgBox("registro exitoso")
         Else
@@ -93,87 +56,43 @@ Public Class frmAgregarProfesor
 
     Sub Ver()
         Dim conexion As New negProfesor
-        dgvlista.DataSource = conexion.obtenerTabla("select * from Profesor")
-        Dim conne As New negSeccion
-        'Combobox inicial
-        cmbInicialGradPorf.DataSource = conne.ObtenerCombobox("select GradoAula from Grado_Seccion where Nivel = 'Inicial'")
-        cmbInicialGradPorf.DisplayMember = "GradoAula"
-        cmbInicialSeccProf.DataSource = conne.ObtenerCombobox("Select NombreSeccion from Grado_Seccion")
-        cmbInicialSeccProf.DisplayMember = "NombreSeccion"
-        'combobox primaria
-        cmbGradPorf.DataSource = conne.ObtenerCombobox("select GradoAula from Grado_Seccion where Nivel = 'Primaria'")
-        cmbGradPorf.DisplayMember = "GradoAula"
-        cmbPrimariaSeccionProf.DataSource = conne.ObtenerCombobox("Select NombreSeccion from Grado_Seccion")
-        cmbPrimariaSeccionProf.DisplayMember = "NombreSeccion"
-
+        dgvlista.DataSource = conexion.obtenerTabla()
     End Sub
-    Private Sub btnActualizar_Click(sender As Object, e As EventArgs) Handles btnActualizar.Click
-        Dim asigna As String
-        Dim objeP As New entProfesor
-        objeP._nombreP = txtNombreProf.Text
-        objeP._apellidoP = txtApellidoProf.Text
-        objeP._correoP = txtCorreoProf.Text
-        objeP._sexoP = cmbSexo.Text
-        objeP._telefonoP = Val(txtTelefonoProf.Text)
-        objeP._direccionP = txtDireccionProf.Text
-        objeP._tipoP = cmbTipoProf.Text
-        'validacion de checkbox
-        If chcCienciasN.Checked = True Then
-            asigna = "Ciencias Naturales"
-            objeP._asignaturasP = asigna
-        ElseIf chcCienciasN.Checked = True Then
-            asigna = chcCienciasN.Text
-        End If
-        If chcCienciasS.Checked = True Then
-            asigna = "Ciencias Sociales"
-            objeP._asignaturasP = asigna
-        ElseIf chcCienciasS.Checked = True Then
-            asigna = chcCienciasS.Text
-        End If
-        If chcEducacionF.Checked = True Then
-            asigna = "Educacion Fisica"
-            objeP._asignaturasP = asigna
-        ElseIf chcEducacionF.Checked = True Then
-            asigna = chcEducacionF.Text
-        End If
-        If chcLengua.Checked = True Then
-            asigna = "Lengua"
-            objeP._asignaturasP = asigna
-        ElseIf chcLengua.Checked = True Then
-            asigna = chcLengua.Text
-        End If
-        If chcMatematicas.Checked = True Then
-            asigna = "Matematica"
-            objeP._asignaturasP = asigna
-        ElseIf chcMatematicas.Checked = True Then
-            asigna = chcMatematicas.Text
-        End If
-        If chcPrimeraLE.Checked = True Then
-            asigna = "Primera lengua"
-            objeP._asignaturasP = asigna
-        ElseIf chcPrimeraLE.Checked = True Then
-            asigna = chcPrimeraLE.Text
-        End If
-        If chcReligion.Checked = True Then
-            asigna = "Religion"
-            objeP._asignaturasP = asigna
-        ElseIf chcReligion.Checked = True Then
-            asigna = chcReligion.Text
-        End If
-        If rbInicial.Checked = True Then
-            objeP._nivelP = "Inicial"
-            objeP._gradoYseccionP = cmbInicialGradPorf.Text
-        End If
-        If rbPrimaria.Checked = True Then
-            objeP._nivelP = "Primaria"
-            objeP._gradoYseccionP = cmbGradPorf.Text
-        End If
-        Dim negprofe As New negProfesor
-        Dim id As Integer
+    Private Sub btnActualizar_Click(sender As Object, e As EventArgs) Handles btnactualizarProfesor.Click
+        Dim objentProfesor As New entProfesor
+        Dim dni As String
         Dim i As Integer
         i = dgvlista.CurrentRow.Index
-        id = dgvlista.Item(0, i).Value()
-        Dim verificarRP = negprofe.Actualizar_Profesor(objeP, id)
+        dni = dgvlista.Item(0, i).Value()
+        objentProfesor._dniProfesor = dni
+        objentProfesor._nombreProfesor = txtnombreProfesor.Text
+        objentProfesor._apellidoProfesor = txtapellidoProfesor.Text
+        objentProfesor._edadProfesor = txtedadProfesor.Text
+        objentProfesor._sexoProfesor = cmbsexoProfesor.Text
+        objentProfesor._direccionProfesor = txtdireccionProfesor.Text
+        objentProfesor._correoProfesor = txtcorreoProfesor.Text
+        objentProfesor._telefonoProfesor = txttelefonoProfesor.Text
+        If cmbcodigoAula.Text = "Inicial 3" Then
+            objentProfesor.objentAula._codigoAula = "I3"
+        ElseIf cmbcodigoAula.Text = "Inicial 4" Then
+            objentProfesor.objentAula._codigoAula = "I4"
+        ElseIf cmbcodigoAula.Text = "Inicial 5" Then
+            objentProfesor.objentAula._codigoAula = "I5"
+        ElseIf cmbcodigoAula.Text = "Primaria 1" Then
+            objentProfesor.objentAula._codigoAula = "P1"
+        ElseIf cmbcodigoAula.Text = "Primaria 2" Then
+            objentProfesor.objentAula._codigoAula = "P2"
+        ElseIf cmbcodigoAula.Text = "Primaria 3" Then
+            objentProfesor.objentAula._codigoAula = "P3"
+        ElseIf cmbcodigoAula.Text = "Primaria 4" Then
+            objentProfesor.objentAula._codigoAula = "P4"
+        ElseIf cmbcodigoAula.Text = "Primaria 5" Then
+            objentProfesor.objentAula._codigoAula = "P5"
+        ElseIf cmbcodigoAula.Text = "Primaria 6" Then
+            objentProfesor.objentAula._codigoAula = "P6"
+        End If
+        Dim objnegProfesor As New negProfesor
+        Dim verificarRP = objnegProfesor.actualizarProfesor(objentProfesor)
         If verificarRP = True Then
             MsgBox("Actualizacion Exitosa")
             LimpiarDatos()
@@ -187,62 +106,27 @@ Public Class frmAgregarProfesor
 
     Private Sub dgvlista_CellClick(sender As Object, e As DataGridViewCellEventArgs) Handles dgvlista.CellClick
         Dim i As Integer
-        Dim asignaturas As String
-        Dim nivel As String
         i = dgvlista.CurrentRow.Index
-        txtNombreProf.Text = dgvlista.Item(1, i).Value()
-        txtApellidoProf.Text = dgvlista.Item(2, i).Value()
-        txtCorreoProf.Text = dgvlista.Item(3, i).Value()
-        cmbSexo.Text = dgvlista.Item(4, i).Value()
-        txtTelefonoProf.Text = dgvlista.Item(5, i).Value()
-        txtDireccionProf.Text = dgvlista.Item(6, i).Value()
-        asignaturas = dgvlista.Item(7, i).Value()
-        If asignaturas = "Ciencias Naturales" Then
-            chcCienciasN.Checked = True
-        End If
-        If asignaturas = "Ciencias Sociales" Then
-            chcCienciasS.Checked = True
-        End If
-        If asignaturas = "Educacion Fisica" Then
-            chcEducacionF.Checked = True
-        End If
-        If asignaturas = "Religion" Then
-            chcReligion.Checked = True
-        End If
-        If asignaturas = "Matematica" Then
-            chcMatematicas.Checked = True
-        End If
-        If asignaturas = "Primera lengua" Then
-            chcPrimeraLE.Checked = True
-        End If
-        If asignaturas = "Lengua" Then
-            chcLengua.Checked = True
-        End If
-        nivel = dgvlista.Item(8, i).Value
-        If nivel = "Inicial" Then
-            cmbGradPorf.Text = ("")
-            rbInicial.Checked = True
-            cmbInicialGradPorf.Text = dgvlista.Item(9, i).Value()
-        ElseIf nivel = "Primaria" Then
-            cmbInicialGradPorf.Text = ("")
-            rbPrimaria.Checked = True
-            cmbGradPorf.Text = dgvlista.Item(9, i).Value()
-        End If
-
-        cmbTipoProf.Text = dgvlista.Item(10, i).Value()
+        txtdniProfesor.Text = dgvlista.Item(0, i).Value()
+        txtnombreProfesor.Text = dgvlista.Item(1, i).Value()
+        txtapellidoProfesor.Text = dgvlista.Item(2, i).Value()
+        txtedadProfesor.Text = dgvlista.Item(3, i).Value()
+        cmbsexoProfesor.Text = dgvlista.Item(4, i).Value()
+        txtdireccionProfesor.Text = dgvlista.Item(5, i).Value()
+        txtcorreoProfesor.Text = dgvlista.Item(6, i).Value()
+        txttelefonoProfesor.Text = dgvlista.Item(7, i).Value()
+        cmbcodigoAula.Text = dgvlista.Item(8, i).Value()
     End Sub
 
-    Private Sub frmAgregarProfesor_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        Ver()
-    End Sub
+    
 
-    Private Sub btnEliminar_Click(sender As Object, e As EventArgs) Handles btnEliminar.Click
-        Dim negprof As New negProfesor
-        Dim id As Integer
+    Private Sub btnEliminar_Click(sender As Object, e As EventArgs) Handles btneliminarProfesor.Click
+        Dim objnegProfesor As New negProfesor
+        Dim dni As String
         Dim i As Integer
         i = dgvlista.CurrentRow.Index
-        id = dgvlista.Item(0, i).Value()
-        Dim verificarRA = negprof.Eliminar_Profesor(id)
+        dni = dgvlista.Item(0, i).Value()
+        Dim verificarRA = objnegProfesor.eliminarProfesor(dni)
         If verificarRA = True Then
             MsgBox("Eliminacion Exitosa")
             Ver()
@@ -253,67 +137,34 @@ Public Class frmAgregarProfesor
     End Sub
 
 
-    Private Sub btnBuscar_Click(sender As Object, e As EventArgs) Handles btnBuscar.Click
-        Dim negprof As New negProfesor
-        Dim id As Integer
-        id = Val(txtBuscarProf.Text)
-
-        dgvlista.DataSource = negprof.Buscar_Profesor(id)
+    Private Sub btnBuscar_Click(sender As Object, e As EventArgs) Handles btnbuscarProfesor.Click
+        Dim objnegProfesor As New negProfesor
+        Dim dni As String
+        dni = txtdniIIProfesor.Text
+        dgvlista.DataSource = objnegProfesor.buscarProfesor(dni)
 
     End Sub
 
     Public Sub LimpiarDatos()
-        txtNombreProf.Clear()
-        txtApellidoProf.Clear()
-        cmbSexo.Text = ""
-        rbInicial.Checked = False
-        rbPrimaria.Checked = False
-        cmbInicialGradPorf.Text = ("")
-        cmbGradPorf.Text = ("")
-        txtBuscarProf.Clear()
-        txtCorreoProf.Clear()
-        txtTelefonoProf.Clear()
-        txtDireccionProf.Clear()
-        cmbTipoProf.Text = ("")
-        chcCienciasN.Checked = False
-        chcCienciasS.Checked = False
-        chcEducacionF.Checked = False
-        chcLengua.Checked = False
-        chcMatematicas.Checked = False
-        chcPrimeraLE.Checked = False
-        chcReligion.Checked = False
-
-    End Sub
-
-    Private Sub rbInicial_CheckedChanged(sender As Object, e As EventArgs) Handles rbInicial.CheckedChanged
-        
-        If rbInicial.Checked = True Then
-            cmbPrimariaSeccionProf.Enabled = False
-            cmbGradPorf.Enabled = False
-        End If
-        If rbInicial.Checked = True Then
-            cmbInicialGradPorf.Enabled = True
-            cmbInicialSeccProf.Enabled = True
-        End If
-        
-    End Sub
-
-
-
-    Private Sub btnCancelar_Click(sender As Object, e As EventArgs) Handles btnCancelar.Click
-        LimpiarDatos()
+        txtdniProfesor.Clear()
+        txtnombreProfesor.Clear()
+        txtapellidoProfesor.Clear()
+        txtedadProfesor.Clear()
+        cmbsexoProfesor.Text = ""
+        txtdireccionProfesor.Clear()
+        txtcorreoProfesor.Clear()
+        txttelefonoProfesor.Clear()
+        cmbcodigoAula.Text = ""
+        txtdniIIProfesor.Clear()
     End Sub
 
     
-    Private Sub rbPrimaria_CheckedChanged(sender As Object, e As EventArgs) Handles rbPrimaria.CheckedChanged
-        If rbPrimaria.Checked = True Then
-            cmbInicialSeccProf.Enabled = False
-            cmbInicialGradPorf.Enabled = False
-        End If
-        If rbPrimaria.Checked = True Then
-            cmbGradPorf.Enabled = True
-            cmbPrimariaSeccionProf.Enabled = True
-        End If
-        
+
+
+
+    Private Sub btnCancelar_Click(sender As Object, e As EventArgs) Handles btncancelarProfesor.Click
+        LimpiarDatos()
     End Sub
+
+
 End Class

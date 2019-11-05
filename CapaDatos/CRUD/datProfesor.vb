@@ -3,22 +3,21 @@ Imports CapaEntidad
 Imports System.Data.SqlClient
 Public Class datProfesor
     Inherits datConexion
-    Public Function RegistrarProfesor(objeP As entProfesor) As Boolean
+    Public Function registrarProfesor(objProfesor As entProfesor) As Boolean
         Using conexion = ObtenerConexion()
             conexion.Open()
             Using Command = New SqlCommand()
                 Command.Connection = conexion
-                Command.CommandText = "InsertarProf"
-                Command.Parameters.AddWithValue("@nombre", objeP._nombreP)
-                Command.Parameters.AddWithValue("@apellido", objeP._apellidoP)
-                Command.Parameters.AddWithValue("@correo", objeP._correoP)
-                Command.Parameters.AddWithValue("@sexo", objeP._sexoP)
-                Command.Parameters.AddWithValue("@telefono", objeP._telefonoP)
-                Command.Parameters.AddWithValue("@direccion", objeP._direccionP)
-                Command.Parameters.AddWithValue("@Asignaturas", objeP._asignaturasP)
-                Command.Parameters.AddWithValue("@nivel", objeP._nivelP)
-                Command.Parameters.AddWithValue("@grado_secc", objeP._gradoYseccionP)
-                Command.Parameters.AddWithValue("@tipo", objeP._tipoP)
+                Command.CommandText = "agregarProfesor"
+                Command.Parameters.AddWithValue("@dniProfesor", objProfesor._dniProfesor)
+                Command.Parameters.AddWithValue("@nombreProfesor", objProfesor._nombreProfesor)
+                Command.Parameters.AddWithValue("@apellidoProfesor", objProfesor._apellidoProfesor)
+                Command.Parameters.AddWithValue("@edadProfesor", objProfesor._edadProfesor)
+                Command.Parameters.AddWithValue("@sexoProfesor", objProfesor._sexoProfesor)
+                Command.Parameters.AddWithValue("@direccionProfesor", objProfesor._direccionProfesor)
+                Command.Parameters.AddWithValue("@correoProfesor", objProfesor._correoProfesor)
+                Command.Parameters.AddWithValue("@telefonoProfesor", objProfesor._telefonoProfesor)
+                Command.Parameters.AddWithValue("@codigoAula", objProfesor.objentAula._codigoAula)
                 Command.CommandType = CommandType.StoredProcedure
                 'Dim reader = Command.ExecuteReader()
                 If Command.ExecuteNonQuery Then
@@ -31,25 +30,22 @@ Public Class datProfesor
         Return False
     End Function
 
-    Public Function ActualizarProfesor(objeP As entProfesor, id As Integer) As Boolean
+    Public Function actualizarProfesor(objProfesor As entProfesor) As Boolean
         Using conexion = ObtenerConexion()
             conexion.Open()
             Using Command = New SqlCommand()
                 Command.Connection = conexion
-                Command.CommandText = "ActualizarProf"
-                Command.Parameters.AddWithValue("@id", id)
-                Command.Parameters.AddWithValue("@nombre", objeP._nombreP)
-                Command.Parameters.AddWithValue("@apellido", objeP._apellidoP)
-                Command.Parameters.AddWithValue("@correo", objeP._correoP)
-                Command.Parameters.AddWithValue("@sexo", objeP._sexoP)
-                Command.Parameters.AddWithValue("@telefono", objeP._telefonoP)
-                Command.Parameters.AddWithValue("@direccion", objeP._direccionP)
-                Command.Parameters.AddWithValue("@asignaturas", objeP._asignaturasP)
-                Command.Parameters.AddWithValue("@nivel", objeP._nivelP)
-                Command.Parameters.AddWithValue("@grado_secc", objeP._gradoYseccionP)
-                Command.Parameters.AddWithValue("@tipo", objeP._tipoP)
+                Command.CommandText = "actualizarProfesor"
+                Command.Parameters.AddWithValue("@dniProfesor", objProfesor._dniProfesor)
+                Command.Parameters.AddWithValue("@nombreProfesor", objProfesor._nombreProfesor)
+                Command.Parameters.AddWithValue("@apellidoProfesor", objProfesor._apellidoProfesor)
+                Command.Parameters.AddWithValue("@edadProfesor", objProfesor._edadProfesor)
+                Command.Parameters.AddWithValue("@sexoProfesor", objProfesor._sexoProfesor)
+                Command.Parameters.AddWithValue("@direccionProfesor", objProfesor._direccionProfesor)
+                Command.Parameters.AddWithValue("@correoProfesor", objProfesor._correoProfesor)
+                Command.Parameters.AddWithValue("@telefonoProfesor", objProfesor._telefonoProfesor)
+                Command.Parameters.AddWithValue("@codigoAula", objProfesor.objentAula._codigoAula)
                 Command.CommandType = CommandType.StoredProcedure
-                'Dim reader = Command.ExecuteReader()
                 If Command.ExecuteNonQuery Then
                     Return True
                 Else
@@ -60,13 +56,13 @@ Public Class datProfesor
         Return False
     End Function
 
-    Public Function BuscarProfesor(id As Integer) As DataTable
+    Public Function buscarProfesor(dni As String) As DataTable
         Using conexion = ObtenerConexion()
             conexion.Open()
             Using Command = New SqlCommand()
                 Command.Connection = conexion
-                Command.CommandText = "BuscarProf"
-                Command.Parameters.AddWithValue("@id", id)
+                Command.CommandText = "buscarprofesor"
+                Command.Parameters.AddWithValue("@dniProfesor", dni)
                 Command.CommandType = CommandType.StoredProcedure
                 Dim dt2 As New DataTable
                 dt2.Load(Command.ExecuteReader())
@@ -79,13 +75,13 @@ Public Class datProfesor
         End Using
         Return Nothing
     End Function
-    Public Function EliminarProfesor(id As Integer) As Boolean
+    Public Function eliminarProfesor(dni As String) As Boolean
         Using conexion = ObtenerConexion()
             conexion.Open()
             Using Command = New SqlCommand()
                 Command.Connection = conexion
-                Command.CommandText = "EliminarProf"
-                Command.Parameters.AddWithValue("@idprof", id)
+                Command.CommandText = "eliminarProfesor"
+                Command.Parameters.AddWithValue("@dni", dni)
                 Command.CommandType = CommandType.StoredProcedure
                 If Command.ExecuteNonQuery Then
                     Return True
@@ -97,13 +93,13 @@ Public Class datProfesor
         Return False
     End Function
 
-    Public Function obtenerTabla(ByVal query As String) As DataTable
+    Public Function obtenerTabla() As DataTable
         Dim cnn As SqlConnection
-        'Dim cadena As String
+        Dim cadena As String
         cnn = ObtenerConexion()
-        'cnn = New SqlConnection(cadena)
+        cadena = "SELECT dbo.profesor.dniProfesor, dbo.profesor.nombreProfesor, dbo.profesor.apellidoProfesor, dbo.profesor.edadProfesor, dbo.profesor.sexoProfesor, dbo.profesor.direccionProfesor, dbo.profesor.correoProfesor, dbo.profesor.telefonoProfesor, dbo.aula.nombreAula  FROM     dbo.aula INNER JOIN dbo.profesor ON dbo.aula.codigoAula = dbo.profesor.codigoAula"
         cnn.Open()
-        Dim cmd As New SqlCommand(query, cnn)
+        Dim cmd As New SqlCommand(cadena, cnn)
         Dim dt2 As New DataTable
         dt2.Load(cmd.ExecuteReader())
         Return dt2
